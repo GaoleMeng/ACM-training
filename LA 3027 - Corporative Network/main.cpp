@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
+#include <cstring>
 using namespace std;
 
 int uf[20000+10];
@@ -28,14 +29,14 @@ int main(){
 		int n;
 		scanf("%d", &n);
 		memset(d, 0, sizeof(d));
-		for (int i = 0; i < n; i++){
+		for (int i = 1; i <= n; i++){
 			uf[i] = i;
 		}
 
-		char x;
-		scanf("%c", &x);
-		while (x != 'O'){
-			if (x == 'E'){
+		char x[9];
+		scanf("%s", x);
+		while (x[0] != 'O'){
+			if (x[0] == 'E'){
 				int tmp;
 				scanf("%d", &tmp);
 				printf("%d\n", find(tmp).second);
@@ -46,7 +47,7 @@ int main(){
 				uf[u] = v;
 				d[u] = abs(u-v) % 1000;
 			}
-			scanf("%c", &x);
+			scanf("%s", x);
 		}
 	}
 
