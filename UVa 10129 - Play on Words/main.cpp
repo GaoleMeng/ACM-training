@@ -65,28 +65,23 @@ int main(){
             bool enter = false;
             for (int i = 0; i < 26; i++){
                 if (ru[i] != chu[i]){
-                    if (ru[i]==chu[i]-1 && !rudayuchu){
-                        count++;
+                    count++;
+                    if (ru[i]==chu[i]-1){
                         rudayuchu = true;
                     }
-                    else if (chu[i] == ru[i] - 1 && !chudayuru){
-                        count++;
+                    else if (chu[i] == ru[i] - 1){
                         chudayuru = true;
-                    }
-                    else{
-                        cout << "The door cannot be opened.\n";
-                        flag = true;
-                        break;
                     }
                 }
             }
-            if (flag) continue;
-            if (count == 1){
-                cout << "The door cannot be opened.\n";
-                continue;
-            }
+            if (count != 2 && count != 0) cout << "The door cannot be opened.\n";
+            else if (count == 0) cout << "Ordering is possible.\n";
             else{
-                cout << "Ordering is possible.\n";
+                if (chudayuru && rudayuchu)
+                    cout << "Ordering is possible.\n";
+                else{
+                    cout << "The door cannot be opened.\n";
+                }
             }
 
         }
