@@ -20,7 +20,7 @@ struct Dijkstra {
     vector<Edge> edges;
     vector<int> G[maxn];
     bool done[maxn];
-    int d[maxn];
+    long long d[maxn];
     int p[maxn];
 
     struct HeapNode {
@@ -40,7 +40,6 @@ struct Dijkstra {
     }
 
     void addEdge(int from, int to, int start, int end, int t){
-        if (t > start) return;
         edges.push_back(Edge(from, to, start, end, t));
         m = edges.size();
         G[from].push_back(m-1);
@@ -48,7 +47,7 @@ struct Dijkstra {
 
     void dijkstra(int s){
         priority_queue<HeapNode> Q;
-        for (int i = 0; i < n; i++) d[i] = INF;
+        for (int i = 0; i < n; i++) d[i] = 1<<30;
         d[s] = 0;
         memset(done, 0, sizeof(done));
         Q.push((HeapNode){0, s});
@@ -61,19 +60,15 @@ struct Dijkstra {
                 Edge& e = edges[G[u][i]];
                 int a = e.start;
                 int b = e.end;
+                if(a < e.ti) continue;
                
-                int shorten  = d[u] - d[u]/(a+b)*(a+b);
-                int lowesttime;
-                if (shorten >= 0 && shorten <= a){
-                    if (shorten + e.ti > a){
-                        lowesttime = (d[u]/(a+b)+1)*(a+b)+e.ti;
-                    }
-                    else{
-                        lowesttime = d[u] + e.ti;
-                    }
+                int shorten = d[u] % (a+b);
+                long long lowesttime;
+                if (shorten + e.ti <= a){
+                    lowesttime = (long long)(d[u] + e.ti);
                 }
                 else{
-                    lowesttime = (d[u]/(a+b)+1)*(a+b)+e.ti;
+                    lowesttime = (long long)(d[u] + a + b - d[u]%(a + b) + e.ti);
                 }
                 if (lowesttime < d[e.to]){
                     d[e.to] = lowesttime;
